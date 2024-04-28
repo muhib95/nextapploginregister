@@ -1,15 +1,45 @@
+"use client"
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Register = () => {
+    const [name,setName]=useState("");
+    const [email,setEmail]=useState("");
+    const [pass,setPass]=useState("");
+    const register=async(e)=>{
+e.preventDefault();
+console.log(name,email,pass);
+try {
+    
+    const res=await fetch("api/register",
+  {  method:"POST",
+    header:{
+"Content-Type":"application/json",
+    },
+    body:
+        JSON.stringify(
+            {
+                name,
+                email,
+                pass
+            }
+        )
+    
+
+}
+);
+} catch (error) {
+    
+}
+    }
     return (
         <div className='grid place-items-center h-screen'>
         <div className='shadow-lg p-5 rounded-lg border-t-4  border-green-400'>
             <h1>Enter the details</h1>
-            <form className='flex flex-col gap-3'>
-            <input type='text' placeholder='Full Name'></input>
-                <input type='text' placeholder='Email'></input>
-                <input type='password' placeholder='Password'></input>
+            <form onSubmit={(e)=>register(e)} className='flex flex-col gap-3'>
+            <input onChange={(e)=>setName(e.target.value)} type='text' placeholder='Full Name'></input>
+                <input onChange={(e)=>setEmail(e.target.value)} type='text' placeholder='Email'></input>
+                <input onChange={(e)=>setPass(e.target.value)} type='password' placeholder='Password'></input>
                 <button className='bg-green-600 text-white py-2 px-6'>
                         Register
                     </button>
